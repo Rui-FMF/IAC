@@ -1,0 +1,29 @@
+	.data
+minus:	.asciiz "texto em minusculas"
+
+	.text
+	.globl main
+main:
+	la $s0, minus
+	addi $s1, $0, 0	#i=0
+for:
+	add $t1, $s0, $s1
+	lb $t2, 0($t1)
+	
+	beq $t2, '\0', end
+	bgt $t2, 'z', skip
+	blt $t2, 'a', skip
+	
+	addi $t2, $t2, -32
+	sb $t2, 0($t1)
+	addi $s1, $s1, 1
+	j for
+skip:
+	sb $t2, 0($t1)
+	addi $s1, $s1, 1
+	j for
+end:
+	la $a0, minus
+	li $v0, 4
+	syscall
+	

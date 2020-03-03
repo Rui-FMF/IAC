@@ -1,0 +1,27 @@
+	.data
+arr:	.word 4,3,-2,1,27,45
+
+	.text
+	.globl main
+main:
+	la $s0, arr
+	addi $s1, $0, 0
+	
+for:
+	bge $s1, 6, end
+	
+	sll $t1, $s1, 2
+	addu $t1, $t1, $s0
+	
+	lw $a0, 0($t1)
+	li $v0, 1
+	syscall
+	
+	li $a0, ';'
+	li $v0, 11
+	syscall
+	
+	addu $s1, $s1, 1
+	j for
+end:
+	

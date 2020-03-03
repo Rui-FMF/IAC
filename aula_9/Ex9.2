@@ -1,0 +1,54 @@
+.data 
+ 	prompt: .asciiz "Introduza uma string\n"
+ 	size: .asciiz "Length: "
+	espaço: .space 24
+
+	.text
+	.globl main
+
+main:	
+	la	$a0,prompt
+	li	$v0,4
+	syscall
+	
+	
+	la	$a1,espaço
+	li	$v0,8
+	syscall
+	
+	
+	jal	strlen
+	
+	
+	addi 	$t2,$v0,0
+	
+	la	$a0,size
+	li	$v0,4
+	syscall
+	
+	addi	$a0,$t2,0
+	li	$v0,1
+	syscall
+	
+	
+	li $v0,10
+	syscall
+	
+	
+strlen: 
+	li	$s1,0		#i
+	li 	$t1,0		#n
+		
+loop:		
+	add	$t5,$s1,$a0
+	addi	$s1,$s1,1		
+	lb 	$t3,0($t5)
+	beq	$t3,'\n',endfunction		
+	addi	$t1,$t1,1
+	
+	j	loop
+		
+endfunction:	
+
+	addu	$v0,$t1,0
+	jr	$ra

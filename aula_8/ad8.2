@@ -1,0 +1,40 @@
+	.data
+arr:	.space 24
+
+	.text
+	.globl main
+main:
+	la $s0, arr
+	addi $s1, $0, 0
+	
+for1:
+	bge $s1, 6, end1
+	
+	li $v0, 5
+	syscall
+	
+	sll $t2, $s1, 2
+	add $t2, $t2, $s0
+	sw $v0, 0($t2)
+	
+	addu $s1, $s1, 1
+	j for1
+end1:
+	addi $s1, $0, 0
+for2:
+	bge $s1, 6, end2
+	
+	sll $t1, $s1, 2
+	addu $t1, $t1, $s0
+	
+	lw $a0, 0($t1)
+	li $v0, 1
+	syscall
+	
+	li $a0, ';'
+	li $v0, 11
+	syscall
+	
+	addu $s1, $s1, 1
+	j for2
+end2:
